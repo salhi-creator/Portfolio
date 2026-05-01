@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Menu, X, Send } from "lucide-react";
 import bgPic from "@assets/abstract-black-blue-marble-textured-background.jpg";
 import PrfPic from "@assets/609069957_1991315548082046_5880687576320858100_n.webp";
+import vesperPic from "@assets/vespershowCAse.png";
+
 /**
  * PORTFOLIO CONFIGURATION
  * Edit these values to customize your portfolio
@@ -34,6 +36,11 @@ skills: [
     title: "UI/UX Design",
     description: "Creating beautiful and intuitive user interfaces",
   },
+    {
+    icon: "🤖",
+    title: "Bot Development",
+    description: "Building intelligent bots with automation, APIs, and real-time interactions ",
+  },
   {
     icon: "⚡",
     title: "Performance",
@@ -48,7 +55,7 @@ skills: [
       description:
         "Vesper is a social media web app featuring authentication, user following, real-time chat, and content posting. It’s currently under active development as new features continue to be integrated.",
       image:
-        "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=300&fit=crop",
+        vesperPic,
       technologies: ["React", "Node.js","socket.io", "tailwind", "MongoDB"],
       link: "https://vesper-self.vercel.app",
     },
@@ -86,7 +93,7 @@ export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="bg-black text-white flex flex-col  overflow-hidden">
+    <div className="bg-black bluebg text-white flex flex-col  overflow-hidden">
       {/* NAVIGATION */}
       <nav className="fixed top-0 w-full bg-black/80 backdrop-blur-md z-50 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -233,18 +240,18 @@ export default function Portfolio() {
       </section>
 
       {/* ABOUT SECTION - What You Do */}
-      <section id="about" className="bluebg border-t min-h-[60vh] w-full  border-white/10">
-        <div className="w-full h-screen backdrop-blur-xl p-0 m-0">
-          <div className="max-w-7xl  h-content mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="about" className=" border-t  w-full border-white/10">
+        <div className="w-full  backdrop-blur-2xl pt-[6rem] pb-[6rem]">
+          <div className="max-w-7xl   mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Title */}
           <h2 className="text-4xl  font-bold text-center mb-16">What I Do</h2>
 
           {/* Skills Grid */}
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="flex flex-wrap items-center justify-center gap-8">
             {PORTFOLIO_CONFIG.skills.map((skill, index) => (
               <div
                 key={index}
-                className="p-8 border border-white/10 rounded-lg hover:border-white/30 hover:bg-white/5 transition-all duration-300 transform hover:scale-105 group"
+                className="p-8 border border-white/10 rounded-lg hover:border-white/30 hover:bg-white/5 transition-all duration-300 transform hover:scale-105 group w-[20rem] h-[20rem]"
                 style={{
                   animation: `fade-in-up 0.6s ease-out ${index * 0.1}s backwards`,
                 }}
@@ -273,7 +280,7 @@ export default function Portfolio() {
       {/* PROJECTS SECTION */}
       <section
         id="projects"
-        className="py-20  bg-gradient-to-b from-black to-black/95 border-t border-white/10"
+        className="py-20  backdrop-blur-2xl from-black to-black/95 border-t border-white/10"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Title */}
@@ -351,6 +358,7 @@ export default function Portfolio() {
             {/* Telegram */}
             <a
               href={PORTFOLIO_CONFIG.contact.telegram}
+               target="_blank"
               className="p-6 border border-white/10 rounded-lg hover:border-white/30 hover:bg-white/5 transition-all group"
             >
               <div className="text-3xl mb-3">💬</div>
@@ -366,6 +374,7 @@ export default function Portfolio() {
             {/* Email */}
             <a
               href={`mailto:${PORTFOLIO_CONFIG.contact.email}`}
+               target="_blank"
               className="p-6 border border-white/10 rounded-lg hover:border-white/30 hover:bg-white/5 transition-all group"
             >
               <div className="text-3xl mb-3">📧</div>
@@ -387,6 +396,7 @@ export default function Portfolio() {
             {PORTFOLIO_CONFIG.contact.github && (
               <a
                 href={PORTFOLIO_CONFIG.contact.github}
+                 target="_blank"
                 className="text-gray-400 hover:text-white transition text-sm"
               >
                 GitHub
@@ -395,6 +405,7 @@ export default function Portfolio() {
             {PORTFOLIO_CONFIG.contact.linkedin && (
               <a
                 href={PORTFOLIO_CONFIG.contact.linkedin}
+                 target="_blank"
                 className="text-gray-400 hover:text-white transition text-sm"
               >
                 LinkedIn
@@ -406,7 +417,7 @@ export default function Portfolio() {
 
       {/* FOOTER */}
       <footer className="py-8 px-4 border-t border-white/10 text-center text-gray-500 text-sm">
-        <p>© 2024 Your Name. All rights reserved.</p>
+        <p>© 2026 Hakim Salhi. All rights reserved.</p>
       </footer>
 
       {/* ANIMATIONS */}

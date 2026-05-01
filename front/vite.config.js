@@ -10,13 +10,13 @@ export default defineConfig({
     proxy: {
       "/app": "http://localhost:3600",
     },
+    allowedHosts: "77f1-129-45-19-177.ngrok-free.app",
   },
   resolve: {
     alias: {
       "@": "/src",
-      "@pages": path.resolve(__dirname, "src", "pages"),        
-            "@assets": path.resolve(__dirname, "src", "assets"),                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+      "@pages": path.resolve(__dirname, "src", "pages"),
+      "@assets": path.resolve(__dirname, "src", "assets"),
     },
   },
 });

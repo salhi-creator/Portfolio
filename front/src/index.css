@@ -16,9 +16,11 @@
     .bluebg{
 
   background-image: url("./assets/abstract-black-blue-marble-textured-background.jpg");
-  background-size: 300% ;        /* fill container */
+  background-size: 900% ;        /* fill container */
   background-position: center;   /* center image */
   background-repeat: no-repeat; 
+  background-attachment: fixed;
+  background-position: top left;
    /* no tiling */
     }
 
