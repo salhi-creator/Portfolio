@@ -48,8 +48,7 @@ export default function Dashboard() {
     getData();
   }, []);
 
-  const filteredRequests = userRequests
-    .filter((request) => {
+  const filteredRequests = userRequests?.filter((request) => {
       // Search filter
       const matchesSearch =
         request.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -62,7 +61,7 @@ export default function Dashboard() {
 
       return matchesSearch && matchesStatus;
     })
-    .sort((a, b) => {
+    ?.sort((a, b) => {
       // Sorting logic
       if (sortBy === "budget") {
         return b.budget - a.budget;
@@ -72,7 +71,7 @@ export default function Dashboard() {
         // deadline (default)
         return new Date(a.deadline) - new Date(b.deadline);
       }
-    });
+    }) ;
 
   return (
     // ok
@@ -164,7 +163,7 @@ export default function Dashboard() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-400 text-sm mb-2">Total Requests</p>
-                  <p className="text-3xl font-bold">{userRequests.length}</p>
+                  <p className="text-3xl font-bold">{userRequests?.length}</p>
                 </div>
                 <div className="text-4xl opacity-20">📋</div>
               </div>
@@ -179,7 +178,7 @@ export default function Dashboard() {
                 <div>
                   <p className="text-gray-400 text-sm mb-2">Active Requests</p>
                   <p className="text-3xl font-bold text-green-400">
-                    {userRequests.filter((r) => r.status === "active").length}
+                    {userRequests?.filter((r) => r.status === "active").length}
                   </p>
                 </div>
                 <div className="text-4xl opacity-20">✓</div>
@@ -195,7 +194,7 @@ export default function Dashboard() {
                 <div>
                   <p className="text-gray-400 text-sm mb-2">Canceled</p>
                   <p className="text-3xl font-bold text-red-400">
-                    {userRequests.filter((r) => r.status === "canceled").length}
+                    {userRequests?.filter((r) => r.status === "canceled").length}
                   </p>
                 </div>
                 <div className="text-4xl opacity-20">✕</div>
@@ -480,11 +479,11 @@ export default function Dashboard() {
           <div className="mt-6 text-center text-sm text-gray-500">
             Showing{" "}
             <span className="text-white font-semibold">
-              {filteredRequests.length}
+              {filteredRequests?.length || "-"}
             </span>{" "}
             of{" "}
             <span className="text-white font-semibold">
-              {userRequests.length}
+              {userRequests?.length || "-"}
             </span>{" "}
             requests
           </div>
