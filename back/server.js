@@ -18,7 +18,10 @@ let app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://portfolio-mu-lilac-xr8z38hue2.vercel.app/",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   }),
@@ -43,17 +46,16 @@ app.get("/auth", (req, res) => {
 
 app.get("/giveMeData", async (req, res) => {
   try {
-      await client.connect();
-       const db = client.db('test')
-       const col = db.collection("orders");
+    await client.connect();
+    const db = client.db("test");
+    const col = db.collection("orders");
 
-       let result = await col.find({}).toArray()
+    let result = await col.find({}).toArray();
 
-      return res.json(result)
+    return res.json(result);
   } catch (err) {
     console.log("error fetching data .. \n", err);
-         return  res.status(500)
-
+    return res.status(500);
   }
 });
 
