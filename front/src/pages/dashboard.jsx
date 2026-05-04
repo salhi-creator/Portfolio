@@ -76,6 +76,7 @@ export default function Dashboard() {
     });
 
   return (
+    // ok
     <div className="min-h-screen bg-black text-white">
       {/* NAVIGATION */}
       <nav className="fixed top-0 w-full bg-black/80 backdrop-blur-md z-50 border-b border-white/10">
