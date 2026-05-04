@@ -8,15 +8,17 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      "/app": "http://localhost:3600",
+      "/api": "http://localhost:3800",
     },
-    allowedHosts: "77f1-129-45-19-177.ngrok-free.app",
   },
   resolve: {
     alias: {
       "@": "/src",
       "@pages": path.resolve(__dirname, "src", "pages"),
       "@assets": path.resolve(__dirname, "src", "assets"),
+      "@components": path.resolve(__dirname, "src", "components"),
+      "@auth": path.resolve(__dirname, "src", "auth"),
+
     },
   },
 });

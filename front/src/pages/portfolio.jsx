@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Menu, X, Send } from "lucide-react";
 import bgPic from "@assets/abstract-black-blue-marble-textured-background.jpg";
 import PrfPic from "@assets/609069957_1991315548082046_5880687576320858100_n.webp";
 import vesperPic from "@assets/vespershowCAse.png";
-
+import { useNavigate } from "react-router-dom";
+import AuthInfo from "../auth/zustand";
+import api from "../api/axios";
 /**
  * PORTFOLIO CONFIGURATION
  * Edit these values to customize your portfolio
@@ -20,33 +22,35 @@ const PORTFOLIO_CONFIG = {
   },
 
   // What you do section
-skills: [
-  {
-    icon: "💻",
-    title: "Web Development",
-    description: "Building responsive and performant web applications",
-  },
-  {
-    icon: "📱",
-    title: "Application Development",
-    description: "Designing and developing scalable desktop and mobile applications",
-  },
-  {
-    icon: "🎨",
-    title: "UI/UX Design",
-    description: "Creating beautiful and intuitive user interfaces",
-  },
+  skills: [
     {
-    icon: "🤖",
-    title: "Bot Development",
-    description: "Building intelligent bots with automation, APIs, and real-time interactions ",
-  },
-  {
-    icon: "⚡",
-    title: "Performance",
-    description: "Optimizing code for speed and efficiency",
-  },
-],
+      icon: "💻",
+      title: "Web Development",
+      description: "Building responsive and performant web applications",
+    },
+    {
+      icon: "📱",
+      title: "Application Development",
+      description:
+        "Designing and developing scalable desktop and mobile applications",
+    },
+    {
+      icon: "🎨",
+      title: "UI/UX Design",
+      description: "Creating beautiful and intuitive user interfaces",
+    },
+    {
+      icon: "🤖",
+      title: "Bot Development",
+      description:
+        "Building intelligent bots with automation, APIs, and real-time interactions ",
+    },
+    {
+      icon: "⚡",
+      title: "Performance",
+      description: "Optimizing code for speed and efficiency",
+    },
+  ],
 
   // Projects section
   projects: [
@@ -54,9 +58,8 @@ skills: [
       title: "Project One",
       description:
         "Vesper is a social media web app featuring authentication, user following, real-time chat, and content posting. It’s currently under active development as new features continue to be integrated.",
-      image:
-        vesperPic,
-      technologies: ["React", "Node.js","socket.io", "tailwind", "MongoDB"],
+      image: vesperPic,
+      technologies: ["React", "Node.js", "socket.io", "tailwind", "MongoDB"],
       link: "https://vesper-self.vercel.app",
     },
     {
@@ -90,11 +93,100 @@ skills: [
  * MAIN PORTFOLIO COMPONENT
  */
 export default function Portfolio() {
+  const pass = AuthInfo((state) => state.pass);
+  const setSage = AuthInfo((state) => state.setSage);
+
+  let [passInput, setPassInput] = useState(false);
+  let [passValue, setValuePass] = useState("");
+
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handelKey = (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "h") {
+        if (pass === import.meta.env.VITE_SAGE_PASS) {
+          navigate("/dashboard");
+          return;
+        }
+        setPassInput(true);
+      }
+    };
+    window.addEventListener("keydown", handelKey);
+    if (passValue === import.meta.env.VITE_SAGE_PASS) {
+      navigate("/dashboard");
+    }
+    return () => window.removeEventListener("keydown", handelKey);
+  }, [navigate]);
+
+  let abort = useRef(null);
+
+  useEffect(() => {
+    async function Check() {
+
+      try {
+        if (abort?.current) {
+          abort.current.abort();
+        }
+        abort.current = new AbortController();
+
+        //
+        let result = await api.get("/auth", {
+          params: {
+            pass: passValue,
+          },
+          signal: abort?.current?.signal,
+        });
+        
+        if (result.data.auth) {
+          setSage({ name: "sage", pass: passValue });
+          navigate("/dashboard");
+          return;
+        } else {
+          return;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+
+      //
+      if (passValue.trim() === import.meta.env.VITE_SAGE_PASS) {
+      }
+    }
+    Check();
+  }, [passValue]);
 
   return (
     <div className="bg-black bluebg text-white flex flex-col  overflow-hidden">
       {/* NAVIGATION */}
+      {passInput && (
+        <div
+          className="flex items-center justify-center min-h-screen "
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setPassInput(false);
+            }
+          }}
+        >
+          <div className="bg-white p-6 rounded-xl shadow-md w-80">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Password
+            </label>
+
+            <input
+              type="text"
+              placeholder="Enter your password"
+              onChange={(e) => {
+                setValuePass(e.target.value);
+                console.log(e.target.value);
+              }}
+              value={passValue}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
+            />
+          </div>
+        </div>
+      )}
       <nav className="fixed top-0 w-full bg-black/80 backdrop-blur-md z-50 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -243,37 +335,37 @@ export default function Portfolio() {
       <section id="about" className=" border-t  w-full border-white/10">
         <div className="w-full  backdrop-blur-2xl pt-[6rem] pb-[6rem]">
           <div className="max-w-7xl   mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Section Title */}
-          <h2 className="text-4xl  font-bold text-center mb-16">What I Do</h2>
+            {/* Section Title */}
+            <h2 className="text-4xl  font-bold text-center mb-16">What I Do</h2>
 
-          {/* Skills Grid */}
-          <div className="flex flex-wrap items-center justify-center gap-8">
-            {PORTFOLIO_CONFIG.skills.map((skill, index) => (
-              <div
-                key={index}
-                className="p-8 border border-white/10 rounded-lg hover:border-white/30 hover:bg-white/5 transition-all duration-300 transform hover:scale-105 group w-[20rem] h-[20rem]"
-                style={{
-                  animation: `fade-in-up 0.6s ease-out ${index * 0.1}s backwards`,
-                }}
-              >
-                {/* Icon */}
-                <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">
-                  {skill.icon}
+            {/* Skills Grid */}
+            <div className="flex flex-wrap items-center justify-center gap-8">
+              {PORTFOLIO_CONFIG.skills.map((skill, index) => (
+                <div
+                  key={index}
+                  className="p-8 border border-white/10 rounded-lg hover:border-white/30 hover:bg-white/5 transition-all duration-300 transform hover:scale-105 group w-[20rem] h-[20rem]"
+                  style={{
+                    animation: `fade-in-up 0.6s ease-out ${index * 0.1}s backwards`,
+                  }}
+                >
+                  {/* Icon */}
+                  <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">
+                    {skill.icon}
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-xl font-bold mb-3 group-hover:text-gray-300 transition">
+                    {skill.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-gray-400 leading-relaxed">
+                    {skill.description}
+                  </p>
                 </div>
-
-                {/* Title */}
-                <h3 className="text-xl font-bold mb-3 group-hover:text-gray-300 transition">
-                  {skill.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-gray-400 leading-relaxed">
-                  {skill.description}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
         </div>
       </section>
 
@@ -295,7 +387,6 @@ export default function Portfolio() {
                 key={index}
                 href={project.link}
                 target="_blank"
-                
                 className="group rounded-lg overflow-hidden border border-white/10 hover:border-white/30 transition-all duration-300 transform hover:scale-105 cursor-pointer"
                 style={{
                   animation: `fade-in-up 0.6s ease-out ${index * 0.1}s backwards`,
@@ -358,7 +449,7 @@ export default function Portfolio() {
             {/* Telegram */}
             <a
               href={PORTFOLIO_CONFIG.contact.telegram}
-               target="_blank"
+              target="_blank"
               className="p-6 border border-white/10 rounded-lg hover:border-white/30 hover:bg-white/5 transition-all group"
             >
               <div className="text-3xl mb-3">💬</div>
@@ -374,7 +465,7 @@ export default function Portfolio() {
             {/* Email */}
             <a
               href={`mailto:${PORTFOLIO_CONFIG.contact.email}`}
-               target="_blank"
+              target="_blank"
               className="p-6 border border-white/10 rounded-lg hover:border-white/30 hover:bg-white/5 transition-all group"
             >
               <div className="text-3xl mb-3">📧</div>
@@ -396,7 +487,7 @@ export default function Portfolio() {
             {PORTFOLIO_CONFIG.contact.github && (
               <a
                 href={PORTFOLIO_CONFIG.contact.github}
-                 target="_blank"
+                target="_blank"
                 className="text-gray-400 hover:text-white transition text-sm"
               >
                 GitHub
@@ -405,7 +496,7 @@ export default function Portfolio() {
             {PORTFOLIO_CONFIG.contact.linkedin && (
               <a
                 href={PORTFOLIO_CONFIG.contact.linkedin}
-                 target="_blank"
+                target="_blank"
                 className="text-gray-400 hover:text-white transition text-sm"
               >
                 LinkedIn
