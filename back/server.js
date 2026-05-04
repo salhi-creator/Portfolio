@@ -46,11 +46,13 @@ app.get("/auth", (req, res) => {
 
 app.get("/giveMeData", async (req, res) => {
   try {
+    console.log("for debuging , hit endpoint");
     await client.connect();
     const db = client.db("test");
     const col = db.collection("orders");
 
     let result = await col.find({}).toArray();
+    console.log("result ", result);
 
     return res.json(result);
   } catch (err) {
