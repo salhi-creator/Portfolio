@@ -31,13 +31,12 @@ export default function Dashboard() {
    * Apply search, status filter, and sorting to requests
    */
 
-  let [userRequests, setUserRequests] = useState([
-  
-  ]);
+  let [userRequests, setUserRequests] = useState([]);
   useEffect(() => {
     async function getData() {
       try {
         let result = await api.get("/giveMeData");
+        console.log(result)
         if (result.data) {
           console.log(result.data);
           setUserRequests(...result.data);
