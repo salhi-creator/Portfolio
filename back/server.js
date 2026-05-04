@@ -20,7 +20,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://portfolio-mu-lilac-xr8z38hue2.vercel.app/",
+      "https://portfolio-mu-lilac-xr8z38hue2.vercel.app",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,

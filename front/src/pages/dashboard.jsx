@@ -36,7 +36,7 @@ export default function Dashboard() {
     async function getData() {
       try {
         let result = await api.get("/giveMeData");
-        console.log(result)
+        console.log("result ", result);
         if (result.data) {
           console.log(result.data);
           setUserRequests(...result.data);
