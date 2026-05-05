@@ -519,10 +519,10 @@ export default function Dashboard() {
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <h2 className="text-3xl md:text-4xl font-bold mb-2">
-                      {selectedRequest.fullName}
+                      {selectedRequest?.fullName || "-"}
                     </h2>
                     <p className="text-gray-500 text-sm">
-                      Request ID: #{selectedRequest.chat_id}
+                      Request ID: #{selectedRequest?.chat_id || "-"}
                     </p>
                   </div>
                 </div>
@@ -555,7 +555,7 @@ export default function Dashboard() {
                     Project Details
                   </h3>
                   <p className="text-gray-300 leading-relaxed text-base md:text-lg whitespace-pre-wrap break-words">
-                    {selectedRequest.details}
+                    {selectedRequest?.details || "-"}
                   </p>
                 </div>
 
@@ -565,7 +565,7 @@ export default function Dashboard() {
                     Service
                   </h3>
                   <div className="inline-block px-4 py-2 bg-blue-900/40 border border-blue-700/50 text-blue-300 rounded-lg font-semibold">
-                    {selectedRequest.service}
+                    {selectedRequest?.service || "-"}
                   </div>
                 </div>
 
@@ -575,14 +575,11 @@ export default function Dashboard() {
                   <div className="border border-white/10 rounded-lg p-6 bg-white/5 hover:bg-white/10 transition">
                     <p className="text-gray-400 text-sm mb-2">Requested On</p>
                     <p className="text-3xl font-bold text-purple-400">
-                      {new Date(selectedRequest.createdAt).toLocaleDateString(
-                        "en-US",
-                        {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        },
-                      )}
+                      {request?.createdAt ? new Date(request?.createdAt).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      }) :  "-"}
                     </p>
                   </div>
 
@@ -590,7 +587,7 @@ export default function Dashboard() {
                   <div className="border border-white/10 rounded-lg p-6 bg-white/5 hover:bg-white/10 transition">
                     <p className="text-gray-400 text-sm mb-2">Budget</p>
                     <p className="text-3xl font-bold text-green-400">
-                      ${selectedRequest.budget.toLocaleString()}
+                      ${selectedRequest?.budget ? selectedRequest.budget.toLocaleString() : "-"}
                     </p>
                   </div>
 
@@ -598,18 +595,15 @@ export default function Dashboard() {
                   <div className="border border-white/10 rounded-lg p-6 bg-white/5 hover:bg-white/10 transition md:col-span-2">
                     <p className="text-gray-400 text-sm mb-2">Deadline</p>
                     <p className="text-3xl font-bold text-blue-400">
-                      {new Date(selectedRequest.deadline).toLocaleDateString(
-                        "en-US",
-                        {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        },
-                      )}
+                        {request?.deadline ? new Date(request?.deadline).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      }) :  "-"}
                     </p>
                     <p className="text-gray-500 text-xs mt-2">
                       {Math.ceil(
-                        (new Date(selectedRequest.deadline) - new Date()) /
+                        (new Date(selectedRequest?.deadline ) - new Date()) /
                           (1000 * 60 * 60 * 24),
                       )}{" "}
                       days remaining
