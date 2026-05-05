@@ -24,7 +24,18 @@ export default function Dashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all"); // all, active, canceled
   const [sortBy, setSortBy] = useState("deadline"); // deadline, budget, name
-  const [selectedRequest, setSelectedRequest] = useState([{chat_id: '--',fullName:"--",deadline:"--",createdAt:"--",service:"--",status:"--",details:"--"}]); // For modal popup
+  const [selectedRequest, setSelectedRequest] = useState([
+    {
+      chat_id: "--",
+      fullName: "--",
+      deadline: "--",
+      createdAt: "--",
+      service: "--",
+      status: "--",
+      details: "--",
+      budget: "--",
+    },
+  ]); // For modal popup
 
   /**
    * FILTER & SORT LOGIC
@@ -50,7 +61,7 @@ export default function Dashboard() {
 
   let filteredRequests = null;
   filteredRequests =
-    (userRequests
+    userRequests
       ?.filter((request) => {
         // Search filter
         const matchesSearch =
@@ -76,7 +87,7 @@ export default function Dashboard() {
           // deadline (default)
           return new Date(a.deadline) - new Date(b.deadline);
         }
-      })) || [] ;
+      }) || [];
 
   return (
     // ok
@@ -338,25 +349,38 @@ export default function Dashboard() {
 
                     {/* Budget */}
                     <td className="px-6 py-4 text-sm font-semibold text-green-400">
-                      ${request?.budget ? request.budget?.toLocaleDateString() :   "-"}
+                      $
+                      {request?.budget
+                        ? request.budget?.toLocaleDateString()
+                        : "-"}
                     </td>
 
                     {/* Request Date */}
                     <td className="px-6 py-4 text-sm text-gray-400">
-                      {request?.createdAt ? new Date(request?.createdAt).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      }) :  "-"}
+                      {request?.createdAt
+                        ? new Date(request?.createdAt).toLocaleDateString(
+                            "en-US",
+                            {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            },
+                          )
+                        : "-"}
                     </td>
 
                     {/* Deadline */}
                     <td className="px-6 py-4 text-sm text-gray-400">
-                      {request?.deadline ? new Date(request?.deadline).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      }) :  "-"}
+                      {request?.deadline
+                        ? new Date(request?.deadline).toLocaleDateString(
+                            "en-US",
+                            {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            },
+                          )
+                        : "-"}
                     </td>
 
                     {/* Status */}
@@ -426,7 +450,7 @@ export default function Dashboard() {
 
                   {/* Details */}
                   <p className="text-sm text-gray-400 mb-3 line-clamp-2">
-                    {request?.details  || "-"}
+                    {request?.details || "-"}
                   </p>
 
                   {/* Service Badge */}
@@ -441,26 +465,39 @@ export default function Dashboard() {
                     <div>
                       <p className="text-gray-500">Budget</p>
                       <p className="font-semibold text-green-400">
-                        ${request?.budget ? request.budget.toLocaleString() : "-"}
+                        $
+                        {request?.budget
+                          ? request.budget.toLocaleString()
+                          : "-"}
                       </p>
                     </div>
                     <div>
                       <p className="text-gray-500">Requested</p>
                       <p className="font-semibold text-white">
-                        {request?.createdAt ? new Date(request?.createdAt).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                      }) :  "-"}
+                        {request?.createdAt
+                          ? new Date(request?.createdAt).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "short",
+                                day: "numeric",
+                              },
+                            )
+                          : "-"}
                       </p>
                     </div>
                     <div>
                       <p className="text-gray-500">Deadline</p>
                       <p className="font-semibold text-white">
-                        {request?.deadline ? new Date(request?.deadline).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      }) :  "-"}
+                        {request?.deadline
+                          ? new Date(request?.deadline).toLocaleDateString(
+                              "en-US",
+                              {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                              },
+                            )
+                          : "-"}
                       </p>
                     </div>
                   </div>
