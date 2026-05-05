@@ -28,8 +28,8 @@ export default function Dashboard() {
     {
       chat_id: "--",
       fullName: "--",
-      deadline: "--",
-      createdAt: "--",
+      deadline: "2026-05-04T17:22:28.238Z",
+      createdAt: "2026-05-04T17:22:28.238Z",
       service: "--",
       status: "--",
       details: "--",
@@ -51,6 +51,7 @@ export default function Dashboard() {
         if (result.data) {
           console.log(result.data);
           setUserRequests(...result.data);
+          userRequests.filter(req => !req.chat_id === "--")
         }
       } catch (err) {
         console.log(err);
@@ -80,7 +81,9 @@ export default function Dashboard() {
       ?.sort((a, b) => {
         // Sorting logic
         if (sortBy === "budget") {
-          return b.budget - a.budget;
+          let A = a.match(/\d/)[0];
+          let B = b.match(/\d/)[0];
+          return parseInt(B) - parseInt(A);
         } else if (sortBy === "name") {
           return a.fullName.localeCompare(b.fullName);
         } else {
@@ -350,9 +353,7 @@ export default function Dashboard() {
                     {/* Budget */}
                     <td className="px-6 py-4 text-sm font-semibold text-green-400">
                       $
-                      {request?.budget
-                        ? request.budget?.toLocaleDateString()
-                        : "-"}
+                      {request?.budget}
                     </td>
 
                     {/* Request Date */}
@@ -467,7 +468,7 @@ export default function Dashboard() {
                       <p className="font-semibold text-green-400">
                         $
                         {request?.budget
-                          ? request.budget.toLocaleString()
+                          ? request.budget
                           : "-"}
                       </p>
                     </div>
@@ -627,7 +628,7 @@ export default function Dashboard() {
                   <div className="border border-white/10 rounded-lg p-6 bg-white/5 hover:bg-white/10 transition">
                     <p className="text-gray-400 text-sm mb-2">Budget</p>
                     <p className="text-3xl font-bold text-green-400">
-                      ${selectedRequest.budget.toLocaleString()}
+                      ${selectedRequest?.budget}
                     </p>
                   </div>
 
@@ -646,7 +647,7 @@ export default function Dashboard() {
                     </p>
                     <p className="text-gray-500 text-xs mt-2">
                       {Math.ceil(
-                        (new Date(selectedRequest.deadline) - new Date()) /
+                        (new Date(selectedRequest?.deadline) - new Date()) /
                           (1000 * 60 * 60 * 24),
                       )}{" "}
                       days remaining
