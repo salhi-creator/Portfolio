@@ -316,47 +316,47 @@ export default function Dashboard() {
                   >
                     {/* ID */}
                     <td className="px-6 py-4 text-sm text-gray-400">
-                      #{request.chat_id}
+                      #{request?.chat_id || "-"}
                     </td>
 
                     {/* Full Name */}
                     <td className="px-6 py-4 text-sm font-semibold text-white group-hover:text-gray-300">
-                      {request.fullName}
+                      {request?.fullName || "-"}
                     </td>
 
                     {/* Details */}
                     <td className="px-6 py-4 text-sm text-gray-400 max-w-xs truncate group-hover:text-gray-300">
-                      {request.details}
+                      {request?.details || "-"}
                     </td>
 
                     {/* Service Name */}
                     <td className="px-6 py-4 text-sm">
                       <span className="px-3 py-1 bg-blue-900/30 text-blue-300 rounded-full text-xs font-medium">
-                        {request.service}
+                        {request?.service || "-"}
                       </span>
                     </td>
 
                     {/* Budget */}
                     <td className="px-6 py-4 text-sm font-semibold text-green-400">
-                      ${request.budget.toLocaleString()}
+                      ${request?.budget ? request.budget?.toLocaleDateString() :   "-"}
                     </td>
 
                     {/* Request Date */}
                     <td className="px-6 py-4 text-sm text-gray-400">
-                      {new Date(request.createdAt).toLocaleDateString("en-US", {
+                      {request?.createdAt ? new Date(request?.createdAt).toLocaleDateString("en-US", {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
-                      })}
+                      }) :  "-"}
                     </td>
 
                     {/* Deadline */}
                     <td className="px-6 py-4 text-sm text-gray-400">
-                      {new Date(request.deadline).toLocaleDateString("en-US", {
+                      {request?.deadline ? new Date(request?.deadline).toLocaleDateString("en-US", {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
-                      })}
+                      }) :  "-"}
                     </td>
 
                     {/* Status */}
@@ -388,7 +388,7 @@ export default function Dashboard() {
             <div className="lg:hidden p-4 space-y-4">
               {filteredRequests?.map((request, index) => (
                 <div
-                  key={request.chat_id}
+                  key={request?.chat_id || "-"}
                   onClick={() => setSelectedRequest(request)}
                   className="border border-white/10 rounded-lg p-4 bg-black/40 hover:bg-white/5 transition-all transform hover:scale-102 group cursor-pointer"
                   style={{
@@ -399,14 +399,14 @@ export default function Dashboard() {
                   <div className="flex justify-between items-start mb-3">
                     <div>
                       <h3 className="font-bold text-white group-hover:text-gray-300 transition">
-                        {request.fullName}
+                        {request?.fullName || "-"}
                       </h3>
                       <p className="text-xs text-gray-500">
-                        ID: #{request.chat_id}
+                        ID: #{request?.chat_id || "-"}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
-                      {request.status === "active" ? (
+                      {request?.status === "active" ? (
                         <>
                           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
                           <span className="text-xs text-green-400 font-semibold">
@@ -426,13 +426,13 @@ export default function Dashboard() {
 
                   {/* Details */}
                   <p className="text-sm text-gray-400 mb-3 line-clamp-2">
-                    {request.details}
+                    {request?.details  || "-"}
                   </p>
 
                   {/* Service Badge */}
                   <div className="mb-3">
                     <span className="px-2 py-1 bg-blue-900/30 text-blue-300 rounded text-xs font-medium">
-                      {request.service}
+                      {request?.service || "-"}
                     </span>
                   </div>
 
@@ -441,31 +441,26 @@ export default function Dashboard() {
                     <div>
                       <p className="text-gray-500">Budget</p>
                       <p className="font-semibold text-green-400">
-                        ${request.budget.toLocaleString()}
+                        ${request?.budget ? request.budget.toLocaleString() : "-"}
                       </p>
                     </div>
                     <div>
                       <p className="text-gray-500">Requested</p>
                       <p className="font-semibold text-white">
-                        {new Date(request.createdAt).toLocaleDateString(
-                          "en-US",
-                          {
-                            month: "short",
-                            day: "numeric",
-                          },
-                        )}
+                        {request?.createdAt ? new Date(request?.createdAt).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                      }) :  "-"}
                       </p>
                     </div>
                     <div>
                       <p className="text-gray-500">Deadline</p>
                       <p className="font-semibold text-white">
-                        {new Date(request.deadline).toLocaleDateString(
-                          "en-US",
-                          {
-                            month: "short",
-                            day: "numeric",
-                          },
-                        )}
+                        {request?.deadline ? new Date(request?.deadline).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      }) :  "-"}
                       </p>
                     </div>
                   </div>
