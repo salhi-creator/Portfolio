@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Menu,
   X,
@@ -24,7 +24,7 @@ export default function Dashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all"); // all, active, canceled
   const [sortBy, setSortBy] = useState("deadline"); // deadline, budget, name
-  const [selectedRequest, setSelectedRequest] = useState(null); // For modal popup
+  const [selectedRequest, setSelectedRequest] = useState([]); // For modal popup
 
   /**
    * FILTER & SORT LOGIC
@@ -48,30 +48,35 @@ export default function Dashboard() {
     getData();
   }, []);
 
-  const filteredRequests = userRequests?.filter((request) => {
-      // Search filter
-      const matchesSearch =
-        request.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        request.serviceName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        request.details.toLowerCase().includes(searchTerm.toLowerCase());
+  let filteredRequests = null;
+  filteredRequests =
+    (userRequests
+      ?.filter((request) => {
+        // Search filter
+        const matchesSearch =
+          request.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          request.serviceName
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          request.details.toLowerCase().includes(searchTerm.toLowerCase());
 
-      // Status filter
-      const matchesStatus =
-        filterStatus === "all" || request.status === filterStatus;
+        // Status filter
+        const matchesStatus =
+          filterStatus === "all" || request.status === filterStatus;
 
-      return matchesSearch && matchesStatus;
-    })
-    ?.sort((a, b) => {
-      // Sorting logic
-      if (sortBy === "budget") {
-        return b.budget - a.budget;
-      } else if (sortBy === "name") {
-        return a.fullName.localeCompare(b.fullName);
-      } else {
-        // deadline (default)
-        return new Date(a.deadline) - new Date(b.deadline);
-      }
-    }) ;
+        return matchesSearch && matchesStatus;
+      })
+      ?.sort((a, b) => {
+        // Sorting logic
+        if (sortBy === "budget") {
+          return b.budget - a.budget;
+        } else if (sortBy === "name") {
+          return a.fullName.localeCompare(b.fullName);
+        } else {
+          // deadline (default)
+          return new Date(a.deadline) - new Date(b.deadline);
+        }
+      })) || [] ;
 
   return (
     // ok
@@ -194,7 +199,10 @@ export default function Dashboard() {
                 <div>
                   <p className="text-gray-400 text-sm mb-2">Canceled</p>
                   <p className="text-3xl font-bold text-red-400">
-                    {userRequests?.filter((r) => r.status === "canceled").length}
+                    {
+                      userRequests?.filter((r) => r.status === "canceled")
+                        .length
+                    }
                   </p>
                 </div>
                 <div className="text-4xl opacity-20">✕</div>
@@ -297,7 +305,7 @@ export default function Dashboard() {
                 </tr>
               </thead>
               <tbody>
-                {filteredRequests.map((request, index) => (
+                {filteredRequests?.map((request, index) => (
                   <tr
                     key={request.chat_id}
                     onClick={() => setSelectedRequest(request)}
@@ -378,7 +386,7 @@ export default function Dashboard() {
 
             {/* Mobile & Tablet Card View */}
             <div className="lg:hidden p-4 space-y-4">
-              {filteredRequests.map((request, index) => (
+              {filteredRequests?.map((request, index) => (
                 <div
                   key={request.chat_id}
                   onClick={() => setSelectedRequest(request)}
@@ -467,7 +475,7 @@ export default function Dashboard() {
           </div>
 
           {/* NO RESULTS MESSAGE */}
-          {filteredRequests.length === 0 && (
+          {filteredRequests?.length === 0 && (
             <div className="text-center py-12">
               <p className="text-gray-400 text-lg">
                 No requests found matching your filters.
