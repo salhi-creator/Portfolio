@@ -485,7 +485,7 @@ export default function Dashboard() {
                       <p className="text-gray-500">Deadline</p>
                       <p className="font-semibold text-white">
                         {request?.deadline && request?.deadline !== "--"
-                          ? deadline
+                          ? request?.deadline
                           : "-"}
                       </p>
                     </div>
