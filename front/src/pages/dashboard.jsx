@@ -624,14 +624,7 @@ export default function Dashboard() {
                   <div className="border border-white/10 rounded-lg p-6 bg-white/5 hover:bg-white/10 transition md:col-span-2">
                     <p className="text-gray-400 text-sm mb-2">Deadline</p>
                     <p className="text-3xl font-bold text-blue-400">
-                      {new Date(selectedRequest.deadline).toLocaleDateString(
-                        "en-US",
-                        {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        },
-                      )}
+                      {selectedRequest.deadline}
                     </p>
                   </div>
                 </div>
