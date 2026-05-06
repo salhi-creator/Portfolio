@@ -50,8 +50,8 @@ export default function Dashboard() {
         console.log("result ", result);
         if (result.data) {
           console.log(result.data);
-          setUserRequests(...result.data);
-          userRequests.filter((req) => !req.chat_id === "--");
+          setUserRequests(result.data);
+          userRequests.filter((req) => req.chat_id !== "--");
         }
       } catch (err) {
         console.log(err);
@@ -67,9 +67,7 @@ export default function Dashboard() {
         // Search filter
         const matchesSearch =
           request.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          request.serviceName
-            .toLowerCase()
-            .includes(searchTerm.toLowerCase()) ||
+          request.service.toLowerCase().includes(searchTerm.toLowerCase()) ||
           request.details.toLowerCase().includes(searchTerm.toLowerCase());
 
         // Status filter
@@ -81,9 +79,9 @@ export default function Dashboard() {
       ?.sort((a, b) => {
         // Sorting logic
         if (sortBy === "budget") {
-          let A = a.match(/\d/)[0];
-          let B = b.match(/\d/)[0];
-          return parseInt(B) - parseInt(A);
+          let A = parseInt(a.toString().replace("$", ""));
+          let B = parseInt(b.toString().replace("$", ""));
+          return B - A;
         } else if (sortBy === "name") {
           return a.fullName.localeCompare(b.fullName);
         } else {

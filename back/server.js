@@ -34,7 +34,9 @@ server.listen(port, () => {
   console.log("server listen on port");
 });
 
-app.get("/auth", (req, res) => {
+app.get("/auth",async (req, res) => {
+  await client.connect();
+
   console.log("hit endpoint");
   let pass = req.query.pass;
   if (pass.trim() === process.env.SAGE_PASS) {
@@ -47,7 +49,6 @@ app.get("/auth", (req, res) => {
 app.get("/giveMeData", async (req, res) => {
   try {
     console.log("for debuging , hit endpoint");
-    await client.connect();
     const db = client.db("test");
     const col = db.collection("orders");
 
