@@ -86,7 +86,7 @@ export default function Dashboard() {
           return a.fullName.localeCompare(b.fullName);
         } else {
           // deadline (default)
-          return new Date(a.deadline) - new Date(b.deadline);
+          return new Date(a.createdAt) - new Date(b.createdAt);
         }
       }) || [];
 
@@ -270,7 +270,7 @@ export default function Dashboard() {
                 onChange={(e) => setSortBy(e.target.value)}
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:border-white/30 focus:bg-white/10 focus:outline-none transition text-white appearance-none cursor-pointer"
               >
-                <option value="deadline">Sort by Deadline</option>
+                <option value="createdAt">Sort by Latest</option>
                 <option value="budget">Sort by Budget</option>
                 <option value="name">Sort by Name</option>
               </select>
@@ -366,8 +366,8 @@ export default function Dashboard() {
                               year: "numeric",
                               month: "short",
                               day: "numeric",
-                              minute :"numeric",
-                              hour:"numeric"
+                              minute: "numeric",
+                              hour: "numeric",
                             },
                           )
                         : "-"}
@@ -376,14 +376,7 @@ export default function Dashboard() {
                     {/* Deadline */}
                     <td className="px-6 py-4 text-sm text-gray-400">
                       {request?.deadline && request?.deadline !== "--"
-                        ? new Date(request?.deadline).toLocaleDateString(
-                            "en-US",
-                            {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            },
-                          )
+                        ? request?.deadline
                         : "-"}
                     </td>
 
@@ -481,8 +474,8 @@ export default function Dashboard() {
                               {
                                 month: "short",
                                 day: "numeric",
-                                minute :"numeric",
-                              hour:"numeric"
+                                minute: "numeric",
+                                hour: "numeric",
                               },
                             )
                           : "-"}
@@ -492,14 +485,7 @@ export default function Dashboard() {
                       <p className="text-gray-500">Deadline</p>
                       <p className="font-semibold text-white">
                         {request?.deadline && request?.deadline !== "--"
-                          ? new Date(request?.deadline).toLocaleDateString(
-                              "en-US",
-                              {
-                                year: "numeric",
-                                month: "short",
-                                day: "numeric",
-                              },
-                            )
+                          ? deadline
                           : "-"}
                       </p>
                     </div>
@@ -646,13 +632,6 @@ export default function Dashboard() {
                           day: "numeric",
                         },
                       )}
-                    </p>
-                    <p className="text-gray-500 text-xs mt-2">
-                      {Math.ceil(
-                        (new Date(selectedRequest?.deadline) - new Date()) /
-                          (1000 * 60 * 60 * 24),
-                      )}{" "}
-                      days remaining
                     </p>
                   </div>
                 </div>
