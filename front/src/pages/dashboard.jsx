@@ -496,7 +496,7 @@ export default function Dashboard() {
           </div>
 
           {/* NO RESULTS MESSAGE */}
-          {filteredRequests?.length === 0 && (
+          {filteredRequests &&  filteredRequests?.length === 0 && (
             <div className="text-center py-12">
               <p className="text-gray-400 text-lg">
                 No requests found matching your filters.
@@ -520,7 +520,7 @@ export default function Dashboard() {
       </div>
 
       {/* REQUEST DETAILS MODAL */}
-      {selectedRequest.length !== 0 && (
+      { selectedRequest && selectedRequest?.length !== 0 && (
         <div
           className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
           onClick={() => setSelectedRequest(null)}
