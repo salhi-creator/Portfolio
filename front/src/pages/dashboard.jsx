@@ -366,6 +366,8 @@ export default function Dashboard() {
                               year: "numeric",
                               month: "short",
                               day: "numeric",
+                              minute :"numeric",
+                              hour:"numeric"
                             },
                           )
                         : "-"}
@@ -479,6 +481,8 @@ export default function Dashboard() {
                               {
                                 month: "short",
                                 day: "numeric",
+                                minute :"numeric",
+                              hour:"numeric"
                               },
                             )
                           : "-"}
@@ -530,7 +534,7 @@ export default function Dashboard() {
       </div>
 
       {/* REQUEST DETAILS MODAL */}
-      {selectedRequest && (
+      {selectedRequest.length !== 0 && (
         <div
           className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
           onClick={() => setSelectedRequest(null)}
