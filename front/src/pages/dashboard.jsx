@@ -28,8 +28,8 @@ export default function Dashboard() {
     {
       chat_id: "--",
       fullName: "--",
-      deadline: "2026-05-04T17:22:28.238Z",
-      createdAt: "2026-05-04T17:22:28.238Z",
+      deadline: "--",
+      createdAt: "--",
       service: "--",
       status: "--",
       details: "--",
@@ -51,7 +51,7 @@ export default function Dashboard() {
         if (result.data) {
           console.log(result.data);
           setUserRequests(...result.data);
-          userRequests.filter(req => !req.chat_id === "--")
+          userRequests.filter((req) => !req.chat_id === "--");
         }
       } catch (err) {
         console.log(err);
@@ -321,8 +321,12 @@ export default function Dashboard() {
               <tbody>
                 {filteredRequests?.map((request, index) => (
                   <tr
-                    key={request.chat_id}
-                    onClick={() => setSelectedRequest(request)}
+                    key={request?.chat_id}
+                    onClick={() =>
+                      request.chat_id !== "--"
+                        ? setSelectedRequest(request)
+                        : setSelectedRequest(null)
+                    }
                     className="border-b border-white/5 hover:bg-white/10 transition-colors group cursor-pointer"
                     style={{
                       animation: `fade-in-row 0.5s ease-out ${index * 0.05}s backwards`,
@@ -352,13 +356,12 @@ export default function Dashboard() {
 
                     {/* Budget */}
                     <td className="px-6 py-4 text-sm font-semibold text-green-400">
-                      $
-                      {request?.budget}
+                      ${request?.budget}
                     </td>
 
                     {/* Request Date */}
                     <td className="px-6 py-4 text-sm text-gray-400">
-                      {request?.createdAt
+                      {request?.createdAt && request?.createdAt !== "--"
                         ? new Date(request?.createdAt).toLocaleDateString(
                             "en-US",
                             {
@@ -372,7 +375,7 @@ export default function Dashboard() {
 
                     {/* Deadline */}
                     <td className="px-6 py-4 text-sm text-gray-400">
-                      {request?.deadline
+                      {request?.deadline && request?.deadline !== "--"
                         ? new Date(request?.deadline).toLocaleDateString(
                             "en-US",
                             {
@@ -466,16 +469,13 @@ export default function Dashboard() {
                     <div>
                       <p className="text-gray-500">Budget</p>
                       <p className="font-semibold text-green-400">
-                        $
-                        {request?.budget
-                          ? request.budget
-                          : "-"}
+                        ${request?.budget }
                       </p>
                     </div>
                     <div>
                       <p className="text-gray-500">Requested</p>
                       <p className="font-semibold text-white">
-                        {request?.createdAt
+                        {request?.createdAt && request?.createdAt !== "--"
                           ? new Date(request?.createdAt).toLocaleDateString(
                               "en-US",
                               {
@@ -489,7 +489,7 @@ export default function Dashboard() {
                     <div>
                       <p className="text-gray-500">Deadline</p>
                       <p className="font-semibold text-white">
-                        {request?.deadline
+                        {request?.deadline && request?.deadline !== "--"
                           ? new Date(request?.deadline).toLocaleDateString(
                               "en-US",
                               {
