@@ -24,7 +24,14 @@ export default function Dashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all"); // all, active, canceled
   const [sortBy, setSortBy] = useState("deadline"); // deadline, budget, name
-  const [selectedRequest, setSelectedRequest] = useState([
+  const [selectedRequest, setSelectedRequest] = useState([]); // For modal popup
+
+  /**
+   * FILTER & SORT LOGIC
+   * Apply search, status filter, and sorting to requests
+   */
+
+  let [userRequests, setUserRequests] = useState([
     {
       chat_id: "--",
       fullName: "--",
@@ -35,14 +42,7 @@ export default function Dashboard() {
       details: "--",
       budget: "--",
     },
-  ]); // For modal popup
-
-  /**
-   * FILTER & SORT LOGIC
-   * Apply search, status filter, and sorting to requests
-   */
-
-  let [userRequests, setUserRequests] = useState([]);
+  ]);
   useEffect(() => {
     async function getData() {
       try {
@@ -469,7 +469,7 @@ export default function Dashboard() {
                     <div>
                       <p className="text-gray-500">Budget</p>
                       <p className="font-semibold text-green-400">
-                        ${request?.budget }
+                        ${request?.budget}
                       </p>
                     </div>
                     <div>
