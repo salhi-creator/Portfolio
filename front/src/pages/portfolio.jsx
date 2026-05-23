@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Menu, X, Send } from "lucide-react";
 import bgPic from "@assets/abstract-black-blue-marble-textured-background.jpg";
-import PrfPic from "@assets/609069957_1991315548082046_5880687576320858100_n.webp";
+import PrfPic from "@assets/mypic.png";
 import vesperPic from "@assets/vespershowCAse.png";
 import { useNavigate } from "react-router-dom";
 import AuthInfo from "../auth/zustand";
@@ -16,7 +16,7 @@ const PORTFOLIO_CONFIG = {
     name: "Salhi Abdle Hakim (Sage)",
     title: "Full Stack Developer",
     description:
-      "I create modern web experiences with clean code and innovative design. Specializing in React, Node.js, and UI/UX.",
+      "I create modern web experiences with clean code and innovative design. Specializing in Backend, Node.js express.js and Frontend using React for UI/UX.",
     image: PrfPic, // Replace with your image URL
     backgroundImage: bgPic, // Replace with your background
   },
@@ -31,8 +31,7 @@ const PORTFOLIO_CONFIG = {
     {
       icon: "📱",
       title: "Application Development",
-      description:
-        "Designing and developing scalable desktop and mobile applications",
+      description: "Designing and developing scalable mobile applications",
     },
     {
       icon: "🎨",
@@ -124,7 +123,6 @@ export default function Portfolio() {
 
   useEffect(() => {
     async function Check() {
-
       try {
         if (abort?.current) {
           abort.current.abort();
@@ -138,7 +136,7 @@ export default function Portfolio() {
           },
           signal: abort?.current?.signal,
         });
-        
+
         if (result.data.auth) {
           setSage({ name: "sage", pass: passValue });
           navigate("/dashboard");
@@ -158,7 +156,7 @@ export default function Portfolio() {
   }, [passValue]);
 
   return (
-    <div className="bg-black bluebg text-white flex flex-col  overflow-hidden">
+    <div className="bg-black bluebg text-white flex flex-col  overflow-hidden gap-0">
       {/* NAVIGATION */}
       {passInput && (
         <div
@@ -445,7 +443,7 @@ export default function Portfolio() {
           </p>
 
           {/* Contact Options */}
-          <div className="grid md:grid-cols-2 gap-6 mb-12">
+          <div className="w-full flex justify-center items-center gap-6 mb-12">
             {/* Telegram */}
             <a
               href={PORTFOLIO_CONFIG.contact.telegram}
@@ -463,20 +461,7 @@ export default function Portfolio() {
             </a>
 
             {/* Email */}
-            <a
-              href={`mailto:${PORTFOLIO_CONFIG.contact.email}`}
-              target="_blank"
-              className="p-6 border border-white/10 rounded-lg hover:border-white/30 hover:bg-white/5 transition-all group"
-            >
-              <div className="text-3xl mb-3">📧</div>
-              <h3 className="font-bold text-lg mb-2">Email</h3>
-              <p className="text-gray-400 text-sm mb-4">
-                {PORTFOLIO_CONFIG.contact.email}
-              </p>
-              <span className="text-white group-hover:translate-x-2 inline-block transition-transform">
-                Send Email →
-              </span>
-            </a>
+
           </div>
 
           {/* Contact Form */}

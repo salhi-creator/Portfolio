@@ -9,6 +9,7 @@ import {
   Clock,
   XCircle,
 } from "lucide-react";
+
 import api from "../api/axios";
 /**
  * DASHBOARD CONFIGURATION
@@ -496,7 +497,7 @@ export default function Dashboard() {
           </div>
 
           {/* NO RESULTS MESSAGE */}
-          {filteredRequests &&  filteredRequests?.length === 0 && (
+          {filteredRequests && filteredRequests?.length === 0 && (
             <div className="text-center py-12">
               <p className="text-gray-400 text-lg">
                 No requests found matching your filters.
@@ -520,7 +521,7 @@ export default function Dashboard() {
       </div>
 
       {/* REQUEST DETAILS MODAL */}
-      { selectedRequest && selectedRequest?.length !== 0 && (
+      {selectedRequest && selectedRequest?.length !== 0 && (
         <div
           className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
           onClick={() => setSelectedRequest(null)}
@@ -636,6 +637,12 @@ export default function Dashboard() {
                     className="flex-1 px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-all transform hover:scale-105"
                   >
                     Accept Request
+                  </button>
+                  <button
+                    onClick={() => setSelectedRequest(null)}
+                    className="flex-1 px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition-all transform hover:scale-105"
+                  >
+                    Ask
                   </button>
                   <button
                     onClick={() => setSelectedRequest(null)}
