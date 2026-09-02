@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Menu, X, Send } from "lucide-react";
 import bgPic from "@assets/abstract-black-blue-marble-textured-background.jpg";
-import PrfPic from "@assets/mypic.png";
+import PrfPic from "@assets/myPic.png";
 import vesperPic from "@assets/vespershowCAse.png";
 import { useNavigate } from "react-router-dom";
 import AuthInfo from "../auth/zustand";
@@ -461,7 +461,6 @@ export default function Portfolio() {
             </a>
 
             {/* Email */}
-
           </div>
 
           {/* Contact Form */}
